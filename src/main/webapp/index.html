@@ -5,119 +5,154 @@
 	<title>Eulerity Image Finder</title>
 	<style>
 		body {
-			margin: 0;
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			background: #f9f9f9;
-			color: #333;
-		}
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9f9f9;
+            color: #333;
+        }
 
-		header {
-			background: linear-gradient(135deg, #0066ff, #0099ff);
-			color: white;
-			padding: 2rem;
-			text-align: center;
-			box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-		}
+        header {
+            background: linear-gradient(135deg, #0066ff, #0099ff);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-		h1, h2 {
-			margin-bottom: 0.5rem;
-		}
+        main {
+            max-width: 900px;
+            margin: auto;
+            padding: 2rem;
+        }
 
-		main {
-			max-width: 900px;
-			margin: auto;
-			padding: 2rem;
-		}
+        h1, h2 {
+            margin-bottom: 0.5rem;
+        }
 
-		ul, p {
-			line-height: 1.6;
-		}
+        form {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            gap: 1rem;
+        }
 
-		form {
-			display: flex;
-			justify-content: center;
-			margin: 2rem 0;
-			gap: 1rem;
-		}
+        input[type="text"] {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
 
-		input[type="text"] {
-			flex: 1;
-			padding: 0.5rem 1rem;
-			font-size: 1rem;
-			border: 2px solid #ccc;
-			border-radius: 8px;
-			transition: 0.3s;
-		}
+        input[type="text"]:focus {
+            border-color: #0099ff;
+            outline: none;
+        }
 
-		input[type="text"]:focus {
-			border-color: #0099ff;
-			outline: none;
-		}
+        button {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            background: #0099ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
 
-		button {
-			padding: 0.5rem 1.2rem;
-			font-size: 1rem;
+        button:hover {
+            background: #007acc;
+        }
+
+        #message {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            min-height: 1.5rem;
+        }
+
+        #message.info { color: #007acc; }
+        #message.error { color: #cc0000; }
+
+        .results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+            padding: 1rem 0;
+        }
+
+        .results img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transform: scale(0.9);
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+            cursor: pointer;
+        }
+
+        .results h3 {
+            grid-column: 1 / -1;
+            margin-top: 2rem;
+            border-bottom: 2px solid #0099ff;
+            color: #007acc;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        footer {
+            text-align: center;
+            color: #777;
+            padding: 2rem 1rem;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            overflow: auto;
+        }
+
+        .modal-content {
+            margin: 5% auto;
+            display: block;
+            max-width: 80%;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+		.download-btn {
+			display: block;
+			margin: 1rem auto;
 			background: #0099ff;
 			color: white;
+			padding: 0.5rem 1rem;
 			border: none;
 			border-radius: 8px;
-			cursor: pointer;
-			transition: background 0.3s;
-		}
-
-		button:hover {
-			background: #007acc;
-		}
-
-		#message {
 			text-align: center;
-			font-size: 1.1rem;
-			margin-top: 1rem;
-			min-height: 1.5rem;
-		}
-
-		#message.info {
-			color: #007acc;
-		}
-
-		#message.error {
-			color: #cc0000;
-		}
-
-		.results {
-			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-			gap: 1rem;
-			padding: 1rem 0;
-		}
-
-		.results img {
-			width: 100%;
-			border-radius: 8px;
-			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-			transform: scale(0.9);
-			opacity: 0;
-			animation: fadeIn 0.6s ease-out forwards;
-		}
-
-		.results h3 {
-			grid-column: 1 / -1;
-			margin-top: 2rem;
-			border-bottom: 2px solid #0099ff;
-			color: #007acc;
-		}
-
-		@keyframes fadeIn {
-			to {
-				opacity: 1;
-				transform: scale(1);
-			}
-		}
-
-		footer {
-			text-align: center;
-			color: #777;
-			padding: 2rem 1rem;
+			text-decoration: none;
+			width: 200px; /* Set fixed width */
 		}
 	</style>
 </head>
@@ -128,135 +163,137 @@
 </header>
 
 <main>
-	<h2>How it works</h2>
+	<h2>How It Works</h2>
 	<ul>
-		<li>Submit the form to POST a URL to the backend.</li>
-		<li>The backend will crawl and extract image URLs.</li>
-		<li>Logos are highlighted distinctly.</li>
-	</ul>
-
-	<h2>Developer Notes</h2>
-	<ul>
-		<li>Extended client-side URL validation using the native <code>URL</code> constructor to prevent malformed requests.</li>
-		<li>Added immediate UX feedback for invalid or empty input before any API call is triggered.</li>
-		<li>Introduced protocol checks to ensure only <code>http</code> and <code>https</code> URLs are accepted.</li>
-		<li>Preserved modular design by keeping validation logic isolated from API response handling.</li>
-		<li>Minimized unnecessary network requests, reducing server load and improving performance.</li>
-		<li>Maintained consistent error display styles for better visual feedback and user experience.</li>
+		<li>Please, enter valid HTTP/HTTPS URL below.</li>
+		<li>Don't worry, client-side validates the URL format before making a request.</li>
+		<li>Backend will crawl the submitted URL and returns all images.</li>
+		<li>Logos are automatically detected and categorized separately in a responsive grid format.</li>
+		<li>Click on an image to open a full-size preview and download it.</li>
 	</ul>
 
 	<h2>Input a Website</h2>
-	<div class="input">
-		<form>
-			<input type="text" name="url" placeholder="Enter URL, e.g. https://example.com">
-			<button type="submit">Submit!</button>
-		</form>
-	</div>
+	<form>
+		<input type="text" name="url" placeholder="Enter URL, e.g. https://example.com">
+		<button type="submit">Submit!</button>
+	</form>
 
-	<div id="message" class=""></div>
-
-	<div class="output">
-		<ul class="results"></ul>
-	</div>
+	<div id="message"></div>
+	<ul class="results"></ul>
 </main>
 
 <footer>
-	Made with ❤️ for Eulerity by Nikita Filippov!
+	Made with ❤️ for Eulerity by Nikita Filippov
 </footer>
 
+<!-- Modal for Image Preview + Download -->
+<div id="imageModal" class="modal">
+	<span class="close">&times;</span>
+	<img class="modal-content" id="modalImg">
+	<a id="downloadBtn" class="download-btn" href="#" download>Download Image</a>
+</div>
+
 <script>
-	const resultList = document.querySelector('ul.results');
-	const urlInput = document.querySelector('input[name=url]');
-	const messageDiv = document.getElementById('message');
+	const form = document.querySelector('form');
+    const urlInput = document.querySelector('input[name=url]');
+    const messageDiv = document.getElementById('message');
+    const resultList = document.querySelector('.results');
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const closeModal = document.querySelector(".close");
 
-	const apiCallBack = function(xhr, callback) {
-		if (xhr.readyState === XMLHttpRequest.DONE) {
-			messageDiv.className = '';
-			messageDiv.textContent = '';
-			if (xhr.status !== 200) {
-				console.error(xhr.responseText);
-				messageDiv.className = 'error';
-				messageDiv.textContent = `Error ${xhr.status}: ${xhr.statusText}`;
-				resultList.innerHTML = '';
-				return;
-			}
-			let response = xhr.responseText ? JSON.parse(xhr.responseText) : null;
-			if (callback) callback(response);
-		}
-	};
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const url = urlInput.value.trim();
 
-	const updateList = function(response) {
-		resultList.innerHTML = '';
-		messageDiv.className = '';
-		messageDiv.textContent = '';
+        let isValidURL;
+        try {
+            const parsed = new URL(url);
+            isValidURL = ['http:', 'https:'].includes(parsed.protocol);
+        } catch (_) {
+            isValidURL = false;
+        }
 
-		const hasImages = response.images && response.images.length > 0;
-		const hasLogos = response.logos && response.logos.length > 0;
+        if (!isValidURL) {
+            messageDiv.className = 'error';
+            messageDiv.textContent = 'Please enter a valid URL starting with http:// or https://';
+            return;
+        }
 
-		if (!hasImages && !hasLogos) {
-			messageDiv.className = 'info';
-			messageDiv.textContent = 'No images found for this URL.';
-			return;
-		}
+        messageDiv.className = 'info';
+        messageDiv.textContent = 'Loading...';
 
-		if (hasLogos) {
-			const logoHeader = document.createElement('h3');
-			logoHeader.textContent = 'Detected Logos';
-			resultList.appendChild(logoHeader);
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/main?url=' + encodeURIComponent(url));
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                messageDiv.className = '';
+                messageDiv.textContent = '';
 
-			for (const logo of response.logos) {
-				const img = document.createElement('img');
-				img.src = logo;
-				img.style.border = '3px solid green';
-				resultList.appendChild(img);
-			}
-		}
+                if (xhr.status !== 200) {
+                    messageDiv.className = 'error';
+                    messageDiv.textContent = `Error ${xhr.status}: ${xhr.statusText}`;
+                    resultList.innerHTML = '';
+                    return;
+                }
 
-		if (hasImages) {
-			const imgHeader = document.createElement('h3');
-			imgHeader.textContent = 'Other Images';
-			resultList.appendChild(imgHeader);
+                const response = JSON.parse(xhr.responseText);
+                updateList(response);
+            }
+        };
+        xhr.send();
+    });
 
-			for (const image of response.images) {
-				if (!response.logos || !response.logos.includes(image)) {
-					const img = document.createElement('img');
-					img.src = image;
-					resultList.appendChild(img);
-				}
-			}
-		}
-	};
+    function updateList(response) {
+        resultList.innerHTML = '';
+        const hasImages = response.images && response.images.length;
+        const hasLogos = response.logos && response.logos.length;
 
-	const makeApiCall = function(url, method, obj, callback) {
-		const xhr = new XMLHttpRequest();
-		xhr.open(method, url);
-		xhr.onreadystatechange = apiCallBack.bind(null, xhr, callback);
-		xhr.send(obj ? (obj instanceof FormData || typeof obj === 'string' ? obj : JSON.stringify(obj)) : null);
-	};
+        if (!hasImages && !hasLogos) {
+            messageDiv.className = 'info';
+            messageDiv.textContent = 'No images found for this URL.';
+            return;
+        }
 
-	document.querySelector('form').addEventListener('submit', function(event) {
-		event.preventDefault();
-		const url = urlInput.value.trim();
+        if (hasLogos) {
+            const logoHeader = document.createElement('h3');
+            logoHeader.textContent = 'Detected Logos';
+            resultList.appendChild(logoHeader);
 
-		// Validate URL format
-		let isValidURL;
-		try {
-			const parsed = new URL(url);
-			isValidURL = parsed.protocol === 'http:' || parsed.protocol === 'https:';
-		} catch (_) {
-			isValidURL = false;
-		}
+            response.logos.forEach(url => {
+                const img = document.createElement('img');
+                img.src = url;
+                img.style.border = '3px solid green';
+                img.onclick = () => openModal(url);
+                resultList.appendChild(img);
+            });
+        }
 
-		if (!isValidURL) {
-			messageDiv.className = 'error';
-			messageDiv.textContent = 'Please enter a valid URL starting with http:// or https://';
-			return;
-		}
+        if (hasImages) {
+            const imgHeader = document.createElement('h3');
+            imgHeader.textContent = 'Other Images';
+            resultList.appendChild(imgHeader);
 
-		messageDiv.className = 'info';
-		messageDiv.textContent = 'Loading...';
-		makeApiCall('/main?url=' + encodeURIComponent(url), 'POST', null, updateList);
-	});
+            response.images.forEach(url => {
+                if (!response.logos || !response.logos.includes(url)) {
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.onclick = () => openModal(url);
+                    resultList.appendChild(img);
+                }
+            });
+        }
+    }
+
+    function openModal(src) {
+        modal.style.display = 'block';
+        modalImg.src = src;
+        downloadBtn.href = src;
+    }
+
+    closeModal.onclick = () => modal.style.display = 'none';
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
 </script>
 </body>
 </html>
