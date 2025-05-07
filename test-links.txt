@@ -1,2 +1,6 @@
 Please paste your list of test URLs below:
+https://www.imdb.com/chart/top
+https://www.tradingview.com
 https://www.scalemates.com
+https://www.allrecipes.com
+https://www.metmuseum.org
